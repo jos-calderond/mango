@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.mindhub'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
@@ -20,25 +20,8 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	//implementation 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
+}
 test {
 	useJUnitPlatform()
-}
-
-task stage(dependsOn: ['build', 'clean'])
-build.mustRunAfter clean
-
-task copyToLib(type: Copy) {
-	into "$buildDir/libs"
-	from(configurations.compile)
-}
-
-stage.dependsOn(copyToLib)
-
-gradle.taskGraph.whenReady {
-	taskGraph ->
-		if (taskGraph.hasTask(stage)) {
-			test.enabled = false
-		}
 }
