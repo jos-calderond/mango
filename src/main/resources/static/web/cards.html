@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/font.css">
+    <title>Cards</title>
+</head>
+<body class="app-body">
+
+<div class="navbarContainer"></div>
+<div class="social-barContainer"></div>
+
+<div class="container" id="app">
+    <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+        <div id="danger-toast" data-bs-delay="2000" class="toast align-items-center text-white bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ errorMsg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col">
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="col-sm-5 mx-auto">
+                            <h2 class="display-4" >Cards
+                                <a v-if="clientInfo.cards.length < 6" href="create-cards.html" id="create" class="btn btn-lg btn-outline-primary">Create a new card</a>
+                            </h2>
+                        </div>
+                        <h2 class="display-6 subtitle">Debit Cards</h2>
+                        <div v-if="debitCards.length <= 0"><span class="small">No debit cards</span></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div v-for="card in debitCards" class="plastic-card col-12 col-md-3 mt-2" style="margin-right: 5%;">
+                        <div v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
+                            <div class="plastic-card__square">
+                                <span class="plastic-card__label ">{{card.type}} {{card.color}}</span>
+                            </div>
+                            <img class="plastic-card__front-logo plastic-card__logo"
+                                 src="images/icons/white-icon.svg">
+                            <p class="plastic-card_numer shadowtext">{{card.number.split("-")[0]}} {{card.number.split("-")[1]}} {{card.number.split("-")[2]}} {{card.number.split("-")[3]}}</p>
+                            <div class="plastic-card__space-60">
+                                <span class="plastic-card__label">card holder</span>
+                                <p class="plastic-card__info shadowtext">{{ card.cardholder }}</p>
+                            </div>
+
+                            <div class="plastic-card__space-25">
+                                <span class="plastic-card__label">Expires</span>
+                                <p class="plastic-card__info shadowtext" v-if="((new Date(card.thruDate)).getMonth()+1) < 10 ">0{{(new Date(card.thruDate)).getMonth()+1}}/{{ (new Date(card.thruDate)).getFullYear().toString().substr(-2) }}</p>
+                                <p class="plastic-card__info shadowtext" v-else>{{(new Date(card.thruDate)).getMonth()+1}}/{{ (new Date(card.thruDate)).getFullYear().toString().substr(-2) }}</p>
+                            </div>
+                        </div>
+
+
+                        <div v-bind:class="['plastic-card__back', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
+                            <div class="plastic-card__black-line"></div>
+                            <div class="plastic-card__back-content">
+                                <div class="plastic-card__secret">
+                                    <p class="plastic-card__secret--last">{{ card.cvv}}</p>
+                                </div>
+                                <div class="plastic-card__back-square plastic-card__square">
+                                    <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                </div>
+                                <img class="plastic-card__back-logo plastic-card__logo"
+                                     src="images/icons/white-icon.svg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h2 class="display-6">Credit Cards</h2>
+                        <span class="small" v-if="creditCards.length <= 0">No credit cards</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div v-for="card in creditCards" class="plastic-card col-12 col-md-3 mt-2" style="margin-right: 5%;">
+                        <div  v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
+                            <div class="plastic-card__square">
+                                <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                            </div>
+                            <img class="plastic-card__front-logo plastic-card__logo"
+                                 src="images/icons/white-icon.svg">
+                            <p class="plastic-card_numer shadowtext">{{card.number.split("-")[0]}} {{card.number.split("-")[1]}} {{card.number.split("-")[2]}} {{card.number.split("-")[3]}}</p>
+                            <div class="plastic-card__space-60">
+                                <span class="plastic-card__label">card holder</span>
+                                <p class="plastic-card__info shadowtext">{{card.cardholder}}</p>
+                            </div>
+                            <div class="plastic-card__space-25">
+                                <span class="plastic-card__label">Expires</span>
+                                <p class="plastic-card__info shadowtext" v-if="((new Date(card.thruDate)).getMonth()+1) < 10 ">0{{(new Date(card.thruDate)).getMonth()+1}}/{{ (new Date(card.thruDate)).getFullYear().toString().substr(-2) }}</p>
+                                <p class="plastic-card__info shadowtext" v-else>{{(new Date(card.thruDate)).getMonth()+1}}/{{ (new Date(card.thruDate)).getFullYear().toString().substr(-2) }}</p>
+                            </div>
+                        </div>
+
+                        <div v-bind:class="['plastic-card__back', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
+                            <div class="plastic-card__black-line"></div>
+                            <div class="plastic-card__back-content">
+                                <div class="plastic-card__secret">
+                                    <p class="plastic-card__secret--last">{{ card.cvv}}</p>
+                                </div>
+                                <div class="plastic-card__back-square plastic-card__square">
+                                    <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                </div>
+                                <img class="plastic-card__back-logo plastic-card__logo"
+                                     src="images/icons/white-icon.svg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br><br>
+<footer class="footr"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
+<script src="js/cards.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.navbarContainer').load('./navbar.html');
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.social-barContainer').load('./socialbar.html');
+    });
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('.footr').load('./footer.html');
+    });
+</script>
+</body>
+</html>

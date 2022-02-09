@@ -1,0 +1,157 @@
+@font-face {
+    font-family: "Gotham-Bold";
+    src: url(https://minisitios.ripley.cl/minisitios/estatico/fonts/font-gotham/Gotham-Bold.woff);
+}
+
+#CONTAINER_HOME_VERANO {
+    max-width: 1140px;
+    padding: 0;
+    margin: 0 auto;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+#CONTAINER_HOME_VERANO h2 {
+    color: #000 !important;
+    font-size: 1.2rem;
+    font-family: Gotham-Bold, sans-serif;
+    font-weight: bold;
+}
+
+#new-in,
+#emprendedores {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 20% 80%;
+}
+
+.en_deporte_1 img {
+    height: 100%;
+}
+#en_deporte {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr 50%;
+    grid-template-areas: "uno dos";
+}
+.en_deporte_1 {
+    grid-area: uno;
+}
+.container_en_Deporte_2-3 {
+    grid-area: dos;
+}
+.container_deporte_slide {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+}
+#carrusel_en_deporte .splide__arrow--next,
+#carrusel_en_deporte .splide__arrow--prev {
+    display: none;
+}
+#carrusel_new_in .splide__pagination,
+#carrusel_emprendedores .splide__pagination,
+#carrusel_mejores_marcas .splide__pagination {
+    bottom: -1.5em;
+}
+
+#carrusel_new_in .splide__pagination,
+#carrusel_emprendedores .splide__pagination {
+    left: 35%;
+}
+
+#carrusel_new_in .splide__pagination__page.is-active,
+#carrusel_emprendedores .splide__pagination__page.is-active,
+#carrusel_mejores_marcas .splide__pagination__page.is-active {
+    background: black;
+}
+#carrusel_new_in .splide__pagination__page,
+#carrusel_emprendedores .splide__pagination__page,
+#carrusel_mejores_marcas .splide__pagination__page {
+    width: 20px;
+    height: 4px;
+    border-radius: 15%;
+    margin: 5px;
+}
+
+#carrusel_mejores_marcas .splide__arrow--next {
+    right: 0em;
+}
+
+#carrusel_mejores_marcas .splide__arrow--prev {
+    left: 0em;
+}
+
+#new-in img,
+#mejores_marcas img,
+#en_deporte img,
+#emprendedores img {
+    width: 100%;
+}
+
+#new-in,
+#mejores_marcas,
+#en_deporte,
+#emprendedores {
+    margin-bottom: 100px;
+}
+
+@media (min-width: 700px) {
+    #CONTAINER_HOME_VERANO h2 {
+        font-size: 1.5rem;
+    }
+
+    #carrusel_mejores_marcas .splide__arrow--next,
+    #carrusel_mejores_marcas .splide__arrow--prev {
+        display: none;
+    }
+
+    #new-in,
+    #emprendedores {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 10% 90%;
+    }
+
+    #new-in img,
+    #emprendedores img {
+        width: unset;
+    }
+
+    #en_deporte {
+        gap: 10px;
+        grid-template-columns: 1fr 47.4%;
+    }
+    .container_deporte_slide {
+        flex-direction: row;
+        gap: 10px;
+    }
+    #carrusel_en_deporte .splide__arrow--next,
+    #carrusel_en_deporte .splide__arrow--prev {
+        display: block;
+    }
+    #carrusel_mejores_marcas .splide__pagination {
+        display: none;
+    }
+    .en_deporte_1 img {
+        height: auto;
+    }
+
+    .splide__slide img:hover {
+        filter: brightness(105%);
+        transition: 0.2s ease-in-out;
+        transform: scale(1.05);
+    }
+
+    .splide__slide img {
+        transition: all 0.3s ease;
+    }
+
+    #carrusel_new_in .splide__pagination,
+    #carrusel_emprendedores .splide__pagination {
+        left: 45%;
+    }
+}
