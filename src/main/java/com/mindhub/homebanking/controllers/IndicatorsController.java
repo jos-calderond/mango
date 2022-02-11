@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.utilities.Indicator;
 import com.mindhub.homebanking.utilities.Indicators;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class IndicatorsController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @RequestMapping(value = "/indicators", method = RequestMethod.GET)
+    @GetMapping(value = "/indicators")
     public Indicators getIndicators(){
         String url = "https://mindicador.cl/api/";
 

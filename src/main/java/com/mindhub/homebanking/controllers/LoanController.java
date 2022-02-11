@@ -40,13 +40,13 @@ public class LoanController {
     @Autowired
     public ProductRepository productRepository;
 
-    @RequestMapping(value = "/loans", method = RequestMethod.GET)
+    @GetMapping(value = "/loans")
     public List<LoanDTO> getLoans(Authentication authentication) {
         return loanRepository.findAll().stream().map(loan -> new LoanDTO(loan)).collect(Collectors.toList());
     }
 
     @Transactional
-    @RequestMapping(value = "/loans", method = RequestMethod.POST)
+    @PostMapping(value = "/loans")
     public ResponseEntity<Object> applyLoan(Authentication authentication, @RequestBody LoanApplicationDTO loanApplication) {
 
         //Validacion inputs

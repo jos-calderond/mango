@@ -15,10 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -39,7 +36,7 @@ public class ExchangeController {
     @Autowired
     public ProductRepository productRepository;
 
-    @RequestMapping(value = "/exchanges", method = RequestMethod.GET)
+    @GetMapping(value = "/exchanges")
     public ExchangesHistoryDTO getHistory(Authentication authentication){
 
         Client client = clientRepository.findByEmail(authentication.getName());
@@ -49,7 +46,7 @@ public class ExchangeController {
 
     }
     @Transactional
-    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    @PostMapping(value = "/products")
     public ResponseEntity<Object> doExchange(Authentication authentication, @RequestBody List<Long> productIds){
         Client client = clientRepository.findByEmail(authentication.getName());
 

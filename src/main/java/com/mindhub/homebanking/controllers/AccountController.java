@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Iterator;
@@ -41,12 +38,12 @@ public class AccountController {
     @Autowired
     private ExchangeRepository exchangeRepository;
 
-    @RequestMapping(value = "/accounts", produces = "application/hal+json")
+    @GetMapping(value = "/accounts", produces = "application/hal+json")
     public List<AccountDTO> getAccounts() {
         return this.accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
     }
 
-    @RequestMapping("/accounts/{id}")
+    @GetMapping("/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id, Authentication authentication) {
 
         Client client = this.clientRepository.findByEmail(authentication.getName());
@@ -62,7 +59,7 @@ public class AccountController {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/clients/current/accounts")
+    @GetMapping( value = "/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication) {
         Client client = this.clientRepository.findByEmail(authentication.getName());
 
@@ -92,7 +89,7 @@ public class AccountController {
         return new ResponseEntity<>("Error creating an account: Forbidden Request", HttpStatus.FORBIDDEN);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/clients/current/accounts")
+    @GetMapping( value = "/clients/current/accounts")
     public List<AccountDTO> getAccounts(Authentication authentication) {
         Client currentClient = clientRepository.findByEmail(authentication.getName());
         return currentClient.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());

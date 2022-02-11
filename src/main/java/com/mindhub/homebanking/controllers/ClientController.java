@@ -38,17 +38,17 @@ public class ClientController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/clients")
+    @GetMapping(value = "/clients")
     public List<ClientDTO> getClients() {
         return this.clientRepository.findAll().stream().map(client -> new ClientDTO(client)).collect(Collectors.toList());
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/clients/{id}")
+    @GetMapping( value = "/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id) {
         return this.clientRepository.findById(id).map(client -> new ClientDTO(client)).orElse(null);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/clients")
+    @PostMapping( value = "/clients")
     public ResponseEntity<Object> createClient(@RequestParam String firstName,
                                                @RequestParam String lastName,
                                                @RequestParam String email,
@@ -93,7 +93,7 @@ public class ClientController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @RequestMapping(value = "/clients/current", method = RequestMethod.GET)
+    @GetMapping(value = "/clients/current")
     public ClientDTO getCurrentUser(Authentication authentication) {
         return new ClientDTO(this.clientRepository.findByEmail(authentication.getName()));
     }
