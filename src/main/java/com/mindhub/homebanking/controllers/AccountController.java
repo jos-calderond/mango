@@ -40,7 +40,8 @@ public class AccountController {
 
     @GetMapping(value = "/accounts", produces = "application/hal+json")
     public List<AccountDTO> getAccounts() {
-        return this.accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        //return this.accountRepository.findAll().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        return this.accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
 
     @GetMapping("/accounts/{id}")
@@ -89,9 +90,10 @@ public class AccountController {
         return new ResponseEntity<>("Error creating an account: Forbidden Request", HttpStatus.FORBIDDEN);
     }
 
-    @GetMapping( value = "/clients/current/accounts")
+    @GetMapping( value = "/clients/current/accountss")
     public List<AccountDTO> getAccounts(Authentication authentication) {
         Client currentClient = clientRepository.findByEmail(authentication.getName());
-        return currentClient.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        //return currentClient.getAccounts().stream().map(account -> new AccountDTO(account)).collect(Collectors.toList());
+        return  currentClient.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
 }
